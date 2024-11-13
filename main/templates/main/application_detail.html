@@ -1,0 +1,19 @@
+{% extends "basic.html" %}
+ {% block title %}<title>Заявки</title>{% endblock %}
+
+{% block content %}
+    {{application}}
+    <h1>Детали заявки: {{ application.title }}</h1>
+    <p><strong>Описание:</strong> {{ application.description }}</p>
+    <p><strong>Категория:</strong> {{ application.category }}</p>
+    <p><strong>Статус:</strong> {{ application.get_status_display }}</p>
+    <p><strong>Дата создания:</strong> {{ application.created_at }}</p>
+    <img src="{{ application.image.url }}" alt="Image" style="width:200px;">
+    <br>
+
+
+    <a href="{% url 'applcation_delete' pk=object.pk %}">Удалить заявку</a>
+
+    <a href="{% url 'application' %}">Назад к списку заявок</a>
+
+{% endblock %}

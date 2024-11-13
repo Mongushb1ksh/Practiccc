@@ -1,0 +1,16 @@
+{% extends "basic.html" %}
+
+ {% block title %}<title>Создать заявку</title>{% endblock %}
+
+{% block content %}
+
+<h1>Создать новую категорию</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}>

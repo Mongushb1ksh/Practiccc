@@ -1,0 +1,14 @@
+{% extends "basic.html" %}
+
+ {% block title %}<title>Создать заявку</title>{% endblock %}
+
+{% block content %}
+
+<h1>Создать новую заявку</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Создать заявку</button>
+    </form>
+    <a href="{% url 'application' %}">Назад к списку заявок</a>
+{% endblock %}>
