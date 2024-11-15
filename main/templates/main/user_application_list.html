@@ -19,12 +19,13 @@
                             <td>{{ application.title }}</td>
                             <td>{{ application.get_status_display }}</td>
                             <td>{{ application.created_at }}</td>
-                            <td><a href="{% url 'application_detail' application.pk %}">Подробнее</a></td>
+                            <td><a href="{% url 'application_detail' application.pk %}">Подробнее</a><br>
+                                <a href="{% url 'edit_application' application.id%}">Редактировать заявку</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}
             </tbody>
         </table>
+<a href="{% url 'application_create' %}">Создать новую заявку</a>
 
- <a href="{% url 'application_create' %}">Создать новую заявку</a>
 {% endblock %}

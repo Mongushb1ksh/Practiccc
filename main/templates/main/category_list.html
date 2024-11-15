@@ -7,6 +7,7 @@
     {% for category in categories %}
       <li>
         {{ category.name }}
+        <a href="{% url 'category_edit' category.id %}">Редакировать</a>
         <a href="{% url 'category_delete' category.id %}">Удалить</a>
       </li>
     {% endfor %}

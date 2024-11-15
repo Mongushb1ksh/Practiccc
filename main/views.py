@@ -4,13 +4,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from unicodedata import category
+
 from .forms import RegistrationForm, ApplicationStatusForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Application, Category, CustomUser, SecurityQuestion, UserSecurityAnswer
 from .forms import ApplicationForm, CategoryForm, ApplicationStatusForm, PasswordResetBySecurityForm
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.conf import settings
+
 
 
 
@@ -167,6 +168,31 @@ class ApplicationDeleteView(LoginRequiredMixin, DeleteView):
         application = self.get_object()
         return application.user == self.request.user
 
+
+
+
+
+
+
+@login_required
+def edit_application(request, application_id):
+    application = get_object_or_404(Application, id=application_id)
+    if application.user != request.user:
+        return redirect('permission_denied')
+    if request.method == 'POST':
+        form = ApplicationForm(request.POST, instance=application)
+        if form.is_valid():
+            form.save()  # Сохраняем изменения
+            return render(request, 'main/user_application_list.html')  # Перенаправление на страницу заявки
+    else:
+        form = ApplicationForm(instance=application)
+
+    return render(request, 'main/edit_application.html', {'form': form, 'application': application})
+
+
+
+
+
 class CategoryCreateView(CreateView):
     model = Category
     form_class = CategoryForm
@@ -176,9 +202,27 @@ class CategoryCreateView(CreateView):
     def get_permission_required(self):
         return ['main.add_category']
 
+def category_edit(request, category_id):
+    category = get_object_or_404(Category, pk=category_id)
+
+    if request.method == 'POST':
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('category_list')
+    else:
+        form = CategoryForm(instance=category)
+
+
+    return render(request, 'main/category_edit.html', {'form': form, 'category': category})
+
 def category_list(request):
     categories = Category.objects.all()  # Получаем все категории из базы данных
     return render(request, 'main/category_list.html', {'categories': categories})
+
+
+
+
 
 def category_delete(request, category_id):
     category = get_object_or_404(Category, id=category_id)

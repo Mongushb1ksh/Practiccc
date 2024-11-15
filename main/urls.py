@@ -16,6 +16,8 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
     path('user_application_list/', views.MyApplicationListView.as_view(), name='user-application-list'),
     path('password_reset_by_security/', views.password_reset_by_security, name='password_reset_by_security'),
+    path('edit_application/<int:application_id>/', views.edit_application, name='edit_application'),
+    path('category_edit/<int:category_id>/', views.category_edit, name='category_edit'),
 
 
 ]
