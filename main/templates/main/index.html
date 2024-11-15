@@ -5,9 +5,7 @@
 
 
  <h1>Список заявок</h1>
-    <a href="{% url 'application_create' %}">Создать новую заявку</a>
-
-    <table>
+       <table>
         <thead>
             <tr>
                 <th>Пользователь</th>
@@ -29,9 +27,7 @@
             {% endfor %}
         </tbody>
     </table>
-             {% if user.is_staff %}
-              <a href="{% url 'category_create' %}">Создать новую категорию</a>
-              {% endif %}
+
 
 
 {% endblock %}

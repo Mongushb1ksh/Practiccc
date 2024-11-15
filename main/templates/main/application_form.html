@@ -5,9 +5,10 @@
 {% block content %}
 
 <h1>Создать новую заявку</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+         <p><strong>Статус:</strong> Новая</p>
         <button type="submit">Создать заявку</button>
     </form>
     <a href="{% url 'application' %}">Назад к списку заявок</a>

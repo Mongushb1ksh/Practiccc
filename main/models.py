@@ -1,5 +1,27 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+
+
+class CustomUser(AbstractUser):
+    security_question  = models.ForeignKey('SecurityQuestion', on_delete=models.SET_NULL, null=True, blank=True)
+    security_answer  = models.CharField(max_length=255, null=True, blank=True)
+    def __str__(self):
+        return self.username
+
+class SecurityQuestion(models.Model):
+    question  = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.question
+
+class UserSecurityAnswer(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='answers')
+    security_question  = models.ForeignKey(SecurityQuestion, on_delete=models.CASCADE)
+    security_answer = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"Ответ безопасности для {self.user.username}"
 
 
 # Модель для категорий заявок
@@ -17,7 +39,7 @@ class Application(models.Model):
         ('completed', 'Выполнено'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
@@ -28,6 +50,10 @@ class Application(models.Model):
 
     def __str__(self):
         return f'{self.title} ({self.status})'
+
+
+
+
 
 
 

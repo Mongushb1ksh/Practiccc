@@ -1,0 +1,12 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+  <h1>Личный кабинет</h1>
+
+  <h2>Информация о пользователе</h2>
+<br>
+<br>
+  <p>ФИО: {{ user.first_name }}</p>
+  <p>Имя пользователя: {{ user.username }}</p>
+  <p>Электронная почта: {{ user.email }}</p>
+{% endblock %}

@@ -1,14 +1,11 @@
-{% extends "basic.html" %}
-
- {% block title %}<title>Создать заявку</title>{% endblock %}
+{% extends 'basic.html' %}
 
 {% block content %}
+  <h1>Вы уверены, что хотите удалить категорию "{{ category.name }}"?</h1>
 
-<h1>Создать новую заявку</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Создать заявку</button>
-    </form>
-    <a href="{% url 'application' %}">Назад к списку заявок</a>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Удалить категорию</button>
+    <a href="{% url 'category_list' %}">Отменить</a>
+  </form>
 {% endblock %}>

@@ -29,7 +29,11 @@
               {% if user.is_authenticated %}
               <li>
                 <li>User: {{ user.get_username }}</li>
-                <li><a href="#">Личный кабинет</a></li>
+                <li><a href="{% url 'user-application-list' %}">Мои заявки</a></li>
+                {% if user.is_staff %}
+                <li><a href="{% url 'category_list' %}">Категории</a></li>
+                {% endif %}
+                <li><a href="{% url 'profile' %}">Личный кабинет</a></li>
                 <form method="POST" action="{% url 'logout' %}">
                       {% csrf_token %}
                       <button type="submit">Выйти</button>
@@ -40,12 +44,7 @@
 
             </ul>
           {% if user.is_staff %}
-            <hr>
-            <ul class="sidebar-nav">
-                <li>Staff</li>
-                <li><a href="#"></a></li>
-                <li><a href="">Просмотр заявок</a></li>
-                <li><a href="#">Create book</a></li>
+
             {% endif %}
           {% endblock %}
         </div>
